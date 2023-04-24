@@ -31,7 +31,7 @@
             {{-- left --}}
             <div class="col d-flex flex-column">
                 <div class="row justify-content-center">
-                    <img src="{{ URL::asset('images/threads-&-needles.png') }}" class="w-50" alt="Your Image">
+                    <img src="{{ URL::asset('image/threads-&-needles.png') }}" class="w-50" alt="Your Image">
                 </div>
                 <div class="row m-5">
                     <h1 class="massive-header text-center">inc9000</h1>
