@@ -56,21 +56,32 @@
                         <form method="post" action="{{ url('/login') }}">
                             @csrf
                             <div class="form-floating mb-4">
-                                <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" placeholder="Enter email">
-                                <label for="email" style="font-weight: bold">Email</label>
-                                @error('email')
+                                <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                    id="username" name="username" value="{{ old('username') }}"
+                                    placeholder="Enter username">
+                                <label for="username" style="font-weight: bold">Username</label>
+                                @error('username')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="form-floating mb-4">
+                            <div class="form-floating mb-2">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" placeholder="Enter password">
+                                    id="password" name="password" placeholder="Enter password">
                                 <label for="password" style="font-weight: bold">Password</label>
                                 @error('password')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
+                            </div>
+
+                            <div class="d-flex flex-row-reverse mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value=""
+                                        id="show_password_check">
+                                    <label class="form-check-label" for="show_password_check" style="font-weight: 600;">
+                                        Show password
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="d-flex justify-content-center">
@@ -78,12 +89,25 @@
                                     style="font-weight:bold; letter-spacing:1px;">LOGIN</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    {{-- jQuery import --}}
+    <script src="plugins/jquery/jquery.min.js"></script>
+
+    {{-- custom script --}}
+    <script>
+        $('#show_password_check').on('change', function() {
+            $('#password').prop('type', $('#show_password_check').prop('checked') == true ?
+                "text" :
+                "password");
+        });
+    </script>
 
 </body>
 

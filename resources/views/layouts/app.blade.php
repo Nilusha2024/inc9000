@@ -28,6 +28,12 @@
         href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
 
 
+    {{-- bootstrap cdn --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+
+
     @stack('third_party_stylesheets')
 
     @stack('page_css')
@@ -95,6 +101,9 @@
             reserved.
         </footer>
     </div>
+
+    {{-- custom styles --}}
+    @vite(['resources/css/core.css'])
 
     @vite(['resources/css/app.css'])
     @vite(['resources/js/app.js'])
