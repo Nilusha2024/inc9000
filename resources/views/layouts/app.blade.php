@@ -28,6 +28,12 @@
         href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css">
 
 
+    {{-- bootstrap cdn --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+
+
     @stack('third_party_stylesheets')
 
     @stack('page_css')
@@ -51,25 +57,25 @@
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ url('image/profile.png') }}" class="user-image img-circle elevation-2"
                             alt="User Image">
-                        <span class="d-none d-md-inline"></span>
+                        <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!-- User image -->
                         <li class="user-header bg-primary">
                             <img src="{{ url('image/profile.png') }}" class="img-circle elevation-2" alt="User Image">
                             <p>
-                                
-                                <small>Member since </small>
+                                {{ Auth::user()->name }}
+                                <small>Member since {{ Auth::user()->created_at->format('M. Y') }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                             <a href="#" class="btn btn-default btn-flat float-right"
-                                >
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Sign out
                             </a>
-                            <form id="logout-form" action="" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </li>
@@ -95,6 +101,9 @@
             reserved.
         </footer>
     </div>
+
+    {{-- custom styles --}}
+    @vite(['resources/css/core.css'])
 
     @vite(['resources/css/app.css'])
     @vite(['resources/js/app.js'])
