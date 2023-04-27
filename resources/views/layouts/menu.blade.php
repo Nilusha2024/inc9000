@@ -53,4 +53,9 @@
         <i class="nav-icon fas fa-dolly"></i>
         <p>Jobs</p>
     </a>
+
+    <a href="{{ route('job-list') }}" class="nav-link {{ Request::is('job-list') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-dolly"></i>
+        <p>Job List</p>
+    </a>
 </li>

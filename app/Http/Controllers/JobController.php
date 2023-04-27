@@ -9,6 +9,7 @@ use App\Models\JobDetail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
@@ -97,4 +98,105 @@ class JobController extends Controller
             return response()->json(['status' => 500, 'message' => 'Job ticket submission failed !', 'error' => $e->getMessage()]);
         }
     }
+
+    // return job list
+    public function list()
+    {
+
+        // $jobs = Job::get();
+
+
+        $jobs = Job::with(['client'])
+            // ->where('department_id', 0 )
+            ->orderBy('job_status', 'DESC')
+            ->get();
+
+        $clients = Client::get();
+
+        return view('job-list')->with(['jobs' => $jobs, 'clients' => $clients]);
+    }
+
+    public function search(Request $request)
+    {
+
+        if ($request->ajax()) {
+            $output = "";
+            $clients = Client::get();
+            $jobs = Job::with(['client'])
+                ->where('job_no', 'like', '%' . $request->search . '%')
+                ->get();
+
+            if ($jobs) {
+                foreach ($jobs as $job) {
+                    if ($job->job_status ==  '1') {
+                        $output .=
+                            '<a href="./jobview/' . $job->id . '">
+                            
+                            <div class="" id="search-results">
+                                <div class="card-body ps-4 pe-4 pb-4">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="card border-dark mb-3 " style="width: 25rem; background: rgba(0, 128, 0, 0.1);">
+                                            <div class="card-header">Job No:' . $job->job_no . '</div>
+                                            <div class="card-body text-dark">
+                                                <h5 class="card-title">Customer:</h5>
+                                                <p class="card-text">' . $job['client']['first_name'] . '</p>
+                                                <h5 class="card-title">Delivery Date:</h5>
+                                                <p class="card-text">' . $job['deliver_date'] . '</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted">
+                                                     Active
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                        </div>
+                        </a>
+                    ';
+                    } else {
+                        $output .=
+                            '<a href="./jobview/' . $job->id . '">
+                            <div class="" id="search-results">
+                                <div class="card-body ps-4 pe-4 pb-4">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="card border-dark mb-3 " style="width: 25rem;">
+                                            <div class="card-header">Job No:' . $job->job_no . '</div>
+                                            <div class="card-body text-dark">
+                                                <h5 class="card-title">Customer:</h5>
+                                                <p class="card-text">' . $job['client']['first_name'] . '</p>
+                                                <h5 class="card-title">Delivery Date:</h5>
+                                                <p class="card-text">' . $job['deliver_date'] . '</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted">
+                                                    Pending
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                        </div>
+                        </a>
+                    ';
+                    }
+                }
+            }
+
+            return Response($output);
+        }
+    }
+
+        // return job 
+        public function jobview($id)
+        {
+            $job = Job::find($id)  ;
+            $clients = Client::get();
+    
+            return view('jobview')->with(['jobs' => $job, 'clients' => $clients]);
+        }
 }
