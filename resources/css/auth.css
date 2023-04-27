@@ -12,7 +12,11 @@
 }
 
 .massive-header {
-    font-size: 60px;
+    font-size: 4rem;
+}
+
+.clip-art {
+    width: 50%;
 }
 
 body h1,
@@ -22,4 +26,15 @@ h4,
 h5,
 h6 {
     font-weight: 800;
+}
+
+/*  media queries  */
+@media (max-width: 500px) {
+    .massive-header {
+        font-size: 2rem;
+    }
+
+    .clip-art {
+        width: 25%;
+    }
 }

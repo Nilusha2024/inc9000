@@ -20,6 +20,17 @@ class JobController extends Controller
         return view('job')->with(['jobs' => $jobs]);
     }
 
+    // return job details view
+    public function details()
+    {
+        $jobId = request('job');
+        $job = Job::find($jobId);
+        $styleDetailRecords = JobDetail::where('job_id', $jobId)->get();
+        $departmentDetailRecords = JobDepartment::where('job_id', $jobId)->get();
+
+        return view('job-details')->with(['job' => $job, 'styleDetailRecords' => $styleDetailRecords, 'departmentDetailRecords' => $departmentDetailRecords]);
+    }
+
     // return create job view
     public function create()
     {
@@ -40,20 +51,35 @@ class JobController extends Controller
                 'job_title' => $request->input('job_title'),
                 'client_id' => $request->input('job_client'),
                 'client_reference_no' => $request->input('job_client_ref'),
+                'material_option' => $request->input('job_material_option'),
                 'order_date' => $request->input('job_order_date'),
                 'deliver_date' => $request->input('job_deliver_date'),
                 'job_status' => 0,
             ]);
 
-            // Job design image insert : inserts the customer document image data
+            // Job design image insert : image 1
 
-            if ($request->hasFile('job_customer_doc')) {
+            if ($request->hasFile('job_design_image_1')) {
 
-                $file = $request->file('job_customer_doc');
+                $file = $request->file('job_design_image_1');
                 $extention = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extention;
+                $filename = time() . '-1' . '.' . $extention;
                 $file->move('uploads/jobs/', $filename);
-                $job->job_design_image = $filename;
+                $job->job_design_image_1 = $filename;
+
+                $job->save();
+            }
+
+
+            // Job design image insert : image 2
+
+            if ($request->hasFile('job_design_image_2')) {
+
+                $file = $request->file('job_design_image_2');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time() . '-2' . '.' . $extention;
+                $file->move('uploads/jobs/', $filename);
+                $job->job_design_image_2 = $filename;
 
                 $job->save();
             }
@@ -61,16 +87,20 @@ class JobController extends Controller
             // Job detail insert : insert styles information related to the job
             $jobId = $job->id;
 
+            $categories = explode(",", $request->input('style_categories'));
             $designs = explode(",", $request->input('style_designs'));
-            $types = explode(",", $request->input('style_types'));
+            $sleeves = explode(",", $request->input('style_sleeves'));
             $sizes = explode(",", $request->input('style_sizes'));
+            $necks = explode(",", $request->input('style_necks'));
             $qtys = explode(",", $request->input('style_qtys'));
 
             for ($i = 0; $i < count($designs); $i++) {
                 JobDetail::create([
                     'job_id' => $jobId,
+                    'category' => $categories[$i],
                     'design' => $designs[$i],
-                    'type' => $types[$i],
+                    'sleeve' => $sleeves[$i],
+                    'neck_type' => $necks[$i],
                     'size' => $sizes[$i],
                     'qty' => $qtys[$i],
                 ]);

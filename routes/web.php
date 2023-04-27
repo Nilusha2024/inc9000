@@ -42,6 +42,8 @@ Route::delete('/delete_user', [App\Http\Controllers\UserController::class, 'dele
 
 Route::get('/job', [App\Http\Controllers\JobController::class, 'index'])->name('job');
 
+Route::get('/view_job_details', [App\Http\Controllers\JobController::class, 'details'])->name('view_job_details');
+
 Route::get('/create_job', [App\Http\Controllers\JobController::class, 'create'])->name('create_job');
 
 Route::post('/store_job', [App\Http\Controllers\JobController::class, 'store'])->name('store_job');

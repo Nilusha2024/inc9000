@@ -49,8 +49,8 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" style="background-color: transparent;"><span
                                     class="fas fa-user-tie"></span></span>
-                            <div class="form-floating">
 
+                            <div class="form-floating">
                                 <select
                                     class="form-select form-select-transparent @error('register_department') is-invalid @enderror"
                                     style="appearance:none;" name="register_department" id="register_department">
@@ -66,7 +66,10 @@
                                 @error('register_department')
                                     <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
+
                             </div>
+
+
                         </div>
 
                         <div class="input-group mb-3">
