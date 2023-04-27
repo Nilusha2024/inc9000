@@ -1,0 +1,40 @@
+/* css for auth pages */
+/* ------------------ */
+
+/* font imports */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+/* styles */
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+.massive-header {
+    font-size: 4rem;
+}
+
+.clip-art {
+    width: 50%;
+}
+
+body h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 800;
+}
+
+/*  media queries  */
+@media (max-width: 500px) {
+    .massive-header {
+        font-size: 2rem;
+    }
+
+    .clip-art {
+        width: 25%;
+    }
+}
