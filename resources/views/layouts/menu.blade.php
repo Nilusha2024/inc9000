@@ -1,61 +1,60 @@
 <!-- menu list -->
 <li class="nav-item">
 
-
-    {{-- Home --}}
-    <a href="genaral" class="nav-link ">
+    @php
+        
+        $user_role = Auth::user()->role_id;
+        
+        $permissions_for_general = [1];
+        $permissions_for_home = [1, 2];
+        $permissions_for_user = [1, 2];
+        $permissions_for_location = [1, 2];
+        $permissions_for_job = [1, 2];
+        $permissions_for_job_mobile = [3];
+        
+    @endphp
 
     {{-- items --}}
-    <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+    {{-- ----- --}}
 
-        <i class="nav-icon fas fa-home"></i>
-        <p>Home</p>
-    </a>
+    {{-- home --}}
+    @if (in_array($user_role, $permissions_for_home))
+        <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-home"></i>
+            <p>Home</p>
+        </a>
+    @endif
 
+    {{-- General --}}
+    @if (in_array($user_role, $permissions_for_general))
+        <a href="{{ route('general') }}" class="nav-link {{ Request::is('general') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-box"></i>
+            <p>General</p>
+        </a>
+    @endif
 
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>Cutting</p>
-    </a>
+    {{-- User --}}
+    @if (in_array($user_role, $permissions_for_user))
+        <a href="{{ route('user') }}" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users"></i>
+            <p>Users</p>
 
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>Pressing </p>
-    </a>
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>Design</p>
-    </a>
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>Printing</p>
-    </a>
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>Sewing</p>
-    </a>
-    <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-user"></i>
-        <p>test</p>
+        </a>
+    @endif
 
-    <a href="{{ route('general') }}" class="nav-link {{ Request::is('general') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-box"></i>
-        <p>General</p>
-    </a>
+    {{-- Job --}}
+    @if (in_array($user_role, $permissions_for_job))
+        <a href="{{ route('job') }}" class="nav-link {{ Request::is('job') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-dolly"></i>
+            <p>Jobs</p>
+        </a>
+    @endif
 
-    <a href="{{ route('user') }}" class="nav-link {{ Request::is('user') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Users</p>
-
-    </a>
-
-    <a href="{{ route('job') }}" class="nav-link {{ Request::is('job') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-dolly"></i>
-        <p>Jobs</p>
-    </a>
-
-    <a href="{{ route('job-list') }}" class="nav-link {{ Request::is('job-list') ? 'active' : '' }}">
-        <i class="nav-icon fas fa-dolly"></i>
-        <p>Job List</p>
-    </a>
+    {{-- Job (mobile view) --}}
+    @if (in_array($user_role, $permissions_for_job_mobile))
+        <a href="{{ route('job-list') }}" class="nav-link {{ Request::is('job-list') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-dolly"></i>
+            <p>Job List</p>
+        </a>
+    @endif
 </li>

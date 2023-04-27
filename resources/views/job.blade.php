@@ -46,7 +46,7 @@
                             @foreach ($jobs as $job)
                                 <tr>
                                     <td>{{ $job->id }}</td>
-                                    <td>{{ $job->client_id }}</td>
+                                    <td>{{ $job['client']['first_name'] }}</td>
                                     <td>{{ $job->job_title }}</td>
                                     <td>{{ $job->order_date }}</td>
                                     <td>{{ $job->deliver_date }}</td>
@@ -61,7 +61,7 @@
                                             </div>
                                             {{-- to view --}}
                                             <div class="col">
-                                                <a href="{{ route('job', ['job' => $job]) }}"
+                                                <a href="{{ route('view_job_details', ['job' => $job]) }}"
                                                     class="btn btn-success btn-sm btn-flat" style="width: 100%">
                                                     View
                                                 </a>
