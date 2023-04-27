@@ -46,10 +46,17 @@
                                         <h5 class="card-title">Assigned Department:</h5>
                                         <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
                                         <h5 class="card-title">Job Department Status:</h5>
-                                        <p class="card-text">{{ $jobactivity['job']['job_status'] }}</p>
+                                        <p class="card-text"></p>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="background: rgba(0, 128, 0, 0.0);">
+                                            <option selected>{{ $jobactivity['job']['job_status'] }}</option>
+                                            <option value="1">Status 1</option>
+                                            <option value="2">Status 2</option>
+                                            <option value="3">Status 3</option>
+                                          </select>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-success">Update</button>
                                             <small class="text-muted">
                                                 Active
                                             </small>
@@ -75,10 +82,18 @@
                                         <h5 class="card-title">Assigned Department:</h5>
                                         <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
                                         <h5 class="card-title">Job Department Status:</h5>
-                                        <p class="card-text">{{ $jobactivity['job']['job_status'] }}</p>
+                                        <p class="card-text"></p>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="background: rgba(0, 128, 0, 0.0);">
+                                            <option selected>{{ $jobactivity['job']['job_status'] }}</option>
+                                            <option value="1">Status 1</option>
+                                            <option value="2">Status 2</option>
+                                            <option value="3">Status 3</option>
+                                          </select>
+                                        
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-success">Update</button>
                                             <small class="text-muted">
                                                 Pending
                                             </small>
