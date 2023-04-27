@@ -113,7 +113,6 @@
                     },
                     success: function(data) {
                         $('#content').html(data)
-                        console.log(data);
                     }
 
                 });
