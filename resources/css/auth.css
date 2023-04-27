@@ -19,7 +19,15 @@
     width: 50%;
 }
 
-body h1,
+.login-card {
+    width: 75%;
+}
+
+.main-row {
+    min-height: 95vh;
+}
+
+h1,
 h2,
 h3,
 h4,
@@ -30,11 +38,44 @@ h6 {
 
 /*  media queries  */
 @media (max-width: 500px) {
+    .main-row {
+        min-height: 80vh;
+    }
+
+    @media (max-height: 800px) {
+        .main-row {
+            min-height: 95vh;
+        }
+    }
+
     .massive-header {
         font-size: 2rem;
     }
 
     .clip-art {
+        width: 40%;
+    }
+
+    .login-card-container {
+        height: 100%;
+        width: 100%;
+    }
+
+    .login-card {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .login-card h1 {
+        font-size: 1.5rem;
+    }
+
+    .login-card input {
+        font-size: 0.9rem;
+    }
+
+    .login-card button {
         width: 25%;
+        font-size: 0.8rem;
     }
 }

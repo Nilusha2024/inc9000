@@ -26,10 +26,10 @@
 
     {{-- split in two grid --}}
     <div class="container-fluid">
-        <div class="row align-items-center justify-content-center" style="min-height: 95vh;">
+        <div class="main-row row align-items-center justify-content-center" style="">
 
             {{-- left --}}
-            <div class="col d-flex flex-column">
+            <div class="col-sm d-flex flex-column">
                 <div class="row justify-content-center">
                     <img src="{{ URL::asset('image/threads-&-needles.png') }}" class="clip-art mt-2" alt="Your Image">
                 </div>
@@ -39,10 +39,10 @@
             </div>
 
             {{-- right --}}
-            <div class="col d-flex justify-content-center">
+            <div class="login-card-container col-sm d-flex justify-content-center">
 
                 {{-- card --}}
-                <div class="card shadow-lg" style="width: 75%; border-radius: 25px;">
+                <div class="login-card card shadow-lg" style="border-radius: 25px;">
                     <div class="card-header m-3 mb-0" style="background-color: transparent;">
                         <div class="row d-flex align-items-center justify-content-center text-center">
                             <div class="col">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body p-5">
+                    <div class="card-body p-sm-5">
 
                         {{-- login form --}}
                         <form method="post" action="{{ url('/login') }}">
@@ -85,7 +85,8 @@
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="pt-3 pb-3 ps-5 pe-5 mt-3 btn btn-dark btn-block"
+                                <button type="submit"
+                                    class="pt-sm-3 pb-sm-3 ps-sm-5 pe-sm-5 mt-sm-3 btn btn-dark btn-block"
                                     style="font-weight:bold; letter-spacing:1px;">LOGIN</button>
                             </div>
                         </form>
