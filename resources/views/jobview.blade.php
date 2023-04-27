@@ -26,20 +26,27 @@
             {{-- job view card --}}
 
 
+
             <div>
                 <div>
-                    @if ($jobs['job_status'] == 1)
+                    @if ($jobactivity['job']['job_status'] == 1)
                         <div class="card-body ps-4 pe-4 pb-4">
                             <div class="d-flex justify-content-center">
                                 <div class="card border-dark mb-3 " style="width: 25rem; background: rgba(0, 128, 0, 0.1);">
-                                    <div class="card-header">Job No: {{ $jobs->job_no }}</div>
+                                    <div class="card-header">Job No: {{ $jobactivity['job']['job_no'] }}</div>
                                     <div class="card-body text-dark">
-                                        <h5 class="card-title">Customer:</h5>
-                                        <p class="card-text">{{ $jobs['client']['first_name'] }}</p>
+                                        <h5 class="card-title">Job Assigned:</h5>
+                                        <p class="card-text">{{ $jobactivity['user']['name'] }}</p>
+                                        <h5 class="card-title">Client Refernce No.:</h5>
+                                        <p class="card-text">{{ $jobactivity['job']['client_reference_no'] }}</p>
                                         <h5 class="card-title">Delivery Date:</h5>
-                                        <p class="card-text">{{ $jobs['deliver_date'] }}</p>
+                                        <p class="card-text">{{ $jobactivity['job']['deliver_date'] }}</p>
                                         <h5 class="card-title">Job Title:</h5>
-                                        <p class="card-text">{{ $jobs['job_title'] }}</p>
+                                        <p class="card-text">{{ $jobactivity['job']['job_title'] }}</p>
+                                        <h5 class="card-title">Assigned Department:</h5>
+                                        <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
+                                        <h5 class="card-title">Job Department Status:</h5>
+                                        <p class="card-text">{{ $jobactivity['job']['job_status'] }}</p>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -55,14 +62,20 @@
                         <div class="card-body ps-4 pe-4 pb-4">
                             <div class="d-flex justify-content-center">
                                 <div class="card border-dark mb-3 " style="width: 25rem; ">
-                                    <div class="card-header">Job No: {{ $jobs->job_no }}</div>
+                                    <div class="card-header">Job No: {{ $jobactivity['job']['job_no'] }}</div>
                                     <div class="card-body text-dark">
-                                        <h5 class="card-title">Customer:</h5>
-                                        <p class="card-text">{{ $jobs['client']['first_name'] }}</p>
+                                        <h5 class="card-title">Job Assigned:</h5>
+                                        <p class="card-text">{{ $jobactivity['user']['name'] }}</p>
+                                        <h5 class="card-title">Client Refernce No.:</h5>
+                                        <p class="card-text">{{ $jobactivity['job']['client_reference_no'] }}</p>
                                         <h5 class="card-title">Delivery Date:</h5>
-                                        <p class="card-text">{{ $jobs['deliver_date'] }}</p>
+                                        <p class="card-text">{{ $jobactivity['job']['deliver_date'] }}</p>
                                         <h5 class="card-title">Job Title:</h5>
-                                        <p class="card-text">{{ $jobs['job_title'] }}</p>
+                                        <p class="card-text">{{ $jobactivity['job']['job_title'] }}</p>
+                                        <h5 class="card-title">Assigned Department:</h5>
+                                        <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
+                                        <h5 class="card-title">Job Department Status:</h5>
+                                        <p class="card-text">{{ $jobactivity['job']['job_status'] }}</p>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -77,6 +90,7 @@
                     @endif
                 </div>
             </div>
+
         </div>
     </section>
 @endsection

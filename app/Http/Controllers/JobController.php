@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Department;
 use App\Models\Job;
+use App\Models\JobActivity;
 use App\Models\JobDepartment;
 use App\Models\JobDetail;
 use Exception;
@@ -100,20 +102,35 @@ class JobController extends Controller
     }
 
     // return job list
-    public function list()
+    // public function list()
+    // {
+
+    //     // $jobs = Job::get();
+
+
+    //     $jobs = Job::with(['client'])
+    //         // ->join('job', 'job.id', '=', 'job_activity.job_id')
+    //         // ->where('department_id', 0 )
+    //         ->orderBy('job_status', 'DESC')
+    //         ->get();
+
+    //     $clients = Client::get();
+    //     $department = Department::get();
+
+    //     return view('job-list')->with(['jobs' => $jobs, 'clients' => $clients, 'department' => $department]);
+    // }
+
+    public function list_activity()
     {
+        $client = Client::get();
+        $department = Department::get();
 
-        // $jobs = Job::get();
-
-
+        $jobactivity = JobActivity::with(['job','user','department',])->get();
         $jobs = Job::with(['client'])
-            // ->where('department_id', 0 )
-            ->orderBy('job_status', 'DESC')
-            ->get();
+        ->orderBy('job_status', 'DESC')
+        ->get();
 
-        $clients = Client::get();
-
-        return view('job-list')->with(['jobs' => $jobs, 'clients' => $clients]);
+        return view('job-list')->with(['jobactivity' => $jobactivity, 'jobs' => $jobs, 'client' => $client, 'department' => $department]);
     }
 
     public function search(Request $request)
@@ -124,6 +141,7 @@ class JobController extends Controller
             $clients = Client::get();
             $jobs = Job::with(['client'])
                 ->where('job_no', 'like', '%' . $request->search . '%')
+                ->orderBy('job_status', 'DESC')
                 ->get();
 
             if ($jobs) {
@@ -191,12 +209,27 @@ class JobController extends Controller
         }
     }
 
-        // return job 
-        public function jobview($id)
-        {
-            $job = Job::find($id)  ;
-            $clients = Client::get();
-    
-            return view('jobview')->with(['jobs' => $job, 'clients' => $clients]);
-        }
+    // return job 
+    public function jobview($id)
+    {
+        $jobactivity = JobActivity::with(['job','user','department'])->find($id);
+        $jobs = Job::get();
+        $clients = Client::get();
+        $department = Department::get();
+        
+        return view('jobview')->with(['jobs' => $jobs, 'clients' => $clients, 'jobactivity' => $jobactivity, 'department' => $department]);
+    }
+
+    // public function jobview($id)
+    // {
+    //     $jobactivity = JobActivity::with(['job','user','department',])->get();
+    //     $job = Job::find($id);
+    //     $clients = Client::get();
+    //     $department = Department::get();
+        
+
+    //     return view('jobview')->with(['jobs' => $job, 'clients' => $clients, 'jobactivity' => $jobactivity, 'department' => $department]);
+    // }
+
+
 }
