@@ -13,12 +13,23 @@
 
 /* header font weights */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+body h1 {
+    font-weight: 800;
+}
+
+body h2 {
+    font-weight: 800;
+}
+
+body h3 {
+    font-weight: 800;
+}
+
+body h4 {
+    font-weight: 800;
+}
+
+body h5 {
     font-weight: 800;
 }
 
