@@ -39,6 +39,10 @@ body h5 {
     background-image: linear-gradient(to right, #a8ff78, #78ffd6);
 }
 
+.bg-gr-green {
+    background-image: linear-gradient(to right, #dce35b, #45b649);
+}
+
 .bg-gr-mint-light {
     background-image: linear-gradient(to right, #d5ffbf, #c2ffed);
 }

@@ -48,6 +48,14 @@ Route::get('/create_job', [App\Http\Controllers\JobController::class, 'create'])
 
 Route::post('/store_job', [App\Http\Controllers\JobController::class, 'store'])->name('store_job');
 
+// Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list'])->name('job-list');
+
+Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list_activity'])->name('job-list');
+
+Route::get('/search', [App\Http\Controllers\JobController::class, 'search'])->name('search');
+
+Route::get('/jobview/{id}', [App\Http\Controllers\JobController::class, 'jobview'])->name('jobview');
+
 // auth routes
 // -----------
 
