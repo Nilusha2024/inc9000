@@ -11,6 +11,8 @@
     font-family: "Inter", sans-serif;
 }
 
+/* header font weights */
+
 body h1 {
     font-weight: 800;
 }
@@ -29,4 +31,26 @@ body h4 {
 
 body h5 {
     font-weight: 800;
+}
+
+/* gradient backgrounds */
+
+.bg-gr-mint {
+    background-image: linear-gradient(to right, #a8ff78, #78ffd6);
+}
+
+.bg-gr-green {
+    background-image: linear-gradient(to right, #dce35b, #45b649);
+}
+
+.bg-gr-mint-light {
+    background-image: linear-gradient(to right, #d5ffbf, #c2ffed);
+}
+
+.bg-gr-amin {
+    background-image: linear-gradient(to right, #8e2de2, #4a00e0);
+}
+
+.bg-gr-crimson {
+    background-image: linear-gradient(to right, #ed213a, #93291e);
 }

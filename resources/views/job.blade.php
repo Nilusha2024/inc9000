@@ -39,6 +39,7 @@
                                 <th>Job title</th>
                                 <th>Order date</th>
                                 <th>Deliver date</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -46,10 +47,17 @@
                             @foreach ($jobs as $job)
                                 <tr>
                                     <td>{{ $job->id }}</td>
-                                    <td>{{ $job->client_id }}</td>
+                                    <td>{{ $job['client']['first_name'] }}</td>
                                     <td>{{ $job->job_title }}</td>
                                     <td>{{ $job->order_date }}</td>
                                     <td>{{ $job->deliver_date }}</td>
+                                    <td>
+                                        @if ($job->job_status == 0)
+                                            <span class="badge badge-warning">PENDING</span>
+                                        @elseif ($job->job_status == 1)
+                                            <span class="badge badge-success">ACTIVE</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="row">
                                             {{-- to update --}}
@@ -61,7 +69,7 @@
                                             </div>
                                             {{-- to view --}}
                                             <div class="col">
-                                                <a href="{{ route('job', ['job' => $job]) }}"
+                                                <a href="{{ route('view_job_details', ['job' => $job]) }}"
                                                     class="btn btn-success btn-sm btn-flat" style="width: 100%">
                                                     View
                                                 </a>
