@@ -657,6 +657,8 @@
             let job_title = $('#job_title').val();
             let job_neck_type = $('#job_neck_type').val();
             let job_material_option = $('#job_material_option').val();
+            let job_packing = $('#job_packing').val();
+            let job_comment = $('#job_comment').val() != '' ? $('#job_comment').val() : 'No comment';
 
             // job design image :
 
@@ -753,6 +755,8 @@
                     form_data.append('job_material_option', job_material_option);
                     form_data.append('job_design_image_1', job_design_image_1);
                     form_data.append('job_design_image_2', job_design_image_2);
+                    form_data.append('job_comment', job_comment);
+                    form_data.append('job_packing', job_packing);
                     form_data.append('style_categories', style_categories);
                     form_data.append('style_designs', style_designs);
                     form_data.append('style_sleeves', style_sleeves);

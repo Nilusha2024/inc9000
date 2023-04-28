@@ -57,6 +57,8 @@ class JobController extends Controller
                 'material_option' => $request->input('job_material_option'),
                 'order_date' => $request->input('job_order_date'),
                 'deliver_date' => $request->input('job_deliver_date'),
+                'comment' => $request->input('job_comment'),
+                'packing' => $request->input('job_packing'),
                 'job_status' => 0,
             ]);
 

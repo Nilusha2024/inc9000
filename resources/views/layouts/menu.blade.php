@@ -8,7 +8,6 @@
         $permissions_for_general = [1];
         $permissions_for_home = [1, 2];
         $permissions_for_user = [1, 2];
-        $permissions_for_location = [1, 2];
         $permissions_for_job = [1, 2];
         $permissions_for_job_mobile = [3];
         
