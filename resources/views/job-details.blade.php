@@ -91,6 +91,8 @@
                                                     <td>
                                                         @if ($job->job_status == 0)
                                                             <span class="badge badge-warning">PENDING</span>
+                                                        @elseif ($job->job_status == 1)
+                                                            <span class="badge badge-success">ACTIVE</span>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -192,6 +194,8 @@
                                                 <td>
                                                     @if ($departmentDetailRecord->department_status == 0)
                                                         <span class="badge badge-warning">PENDING</span>
+                                                    @elseif ($departmentDetailRecord->department_status == 1)
+                                                        <span class="badge badge-success">ACTIVE</span>
                                                     @endif
                                                 </td>
                                             </tr>
