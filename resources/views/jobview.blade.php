@@ -47,18 +47,25 @@
                                         <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
                                         <h5 class="card-title">Job Department Status:</h5>
                                         <p class="card-text"></p>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="background: rgba(0, 128, 0, 0.0);">
-                                            <option selected>{{ $jobactivity['job']['job_status'] }}</option>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                            style="background: rgba(0, 128, 0, 0.0);">
+                                            <option selected>
+                                                @if ($jobactivity['job']['job_status'] == 1)
+                                                    Active
+                                                @else
+                                                    Pending
+                                                @endif
+                                            </option>
                                             <option value="1">Status 1</option>
                                             <option value="2">Status 2</option>
                                             <option value="3">Status 3</option>
-                                          </select>
+                                        </select>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <button type="button" class="btn btn-success">Update</button>
                                             <small class="text-muted">
-                                                Active
+                                                
                                             </small>
                                         </div>
                                     </div>
@@ -83,19 +90,26 @@
                                         <p class="card-text">{{ $jobactivity['department']['department_name'] }}</p>
                                         <h5 class="card-title">Job Department Status:</h5>
                                         <p class="card-text"></p>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="background: rgba(0, 128, 0, 0.0);">
-                                            <option selected>{{ $jobactivity['job']['job_status'] }}</option>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                            style="background: rgba(0, 128, 0, 0.0);">
+                                            <option selected>
+                                                @if ($jobactivity['job']['job_status'] == 1)
+                                                    Active
+                                                @else
+                                                    Pending
+                                                @endif
+                                            </option>
                                             <option value="1">Status 1</option>
                                             <option value="2">Status 2</option>
                                             <option value="3">Status 3</option>
-                                          </select>
-                                        
+                                        </select>
+
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <button type="button" class="btn btn-success">Update</button>
                                             <small class="text-muted">
-                                                Pending
+                                                
                                             </small>
                                         </div>
                                     </div>
