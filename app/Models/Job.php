@@ -14,4 +14,9 @@ class Job extends Model
     {
         return $this->belongsTo('App\Models\Client', 'client_id', 'id');
     }
+
+    public function jobdetails()
+    {
+        return $this->hasMany('App\Models\JobDetail' , 'job_id', 'id');
+    }
 }
