@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|a
+|
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
@@ -47,6 +47,14 @@ Route::get('/view_job_details', [App\Http\Controllers\JobController::class, 'det
 Route::get('/create_job', [App\Http\Controllers\JobController::class, 'create'])->name('create_job');
 
 Route::post('/store_job', [App\Http\Controllers\JobController::class, 'store'])->name('store_job');
+
+// Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list'])->name('job-list');
+
+Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list_activity'])->name('job-list');
+
+Route::get('/search', [App\Http\Controllers\JobController::class, 'search'])->name('search');
+
+Route::get('/jobview/{id}', [App\Http\Controllers\JobController::class, 'jobview'])->name('jobview');
 
 // auth routes
 // -----------

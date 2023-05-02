@@ -29,6 +29,14 @@
                 </div>
                 <div class="card-body ps-4 pe-4 pb-4">
 
+                    {{-- success alert --}}
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-block bg-gr-green">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+
                     {{-- form start --}}
                     <form method="POST" action="{{ route('update_user') }}" enctype="multipart/form-data">
 

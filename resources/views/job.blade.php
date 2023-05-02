@@ -39,6 +39,7 @@
                                 <th>Job title</th>
                                 <th>Order date</th>
                                 <th>Deliver date</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -50,6 +51,13 @@
                                     <td>{{ $job->job_title }}</td>
                                     <td>{{ $job->order_date }}</td>
                                     <td>{{ $job->deliver_date }}</td>
+                                    <td>
+                                        @if ($job->job_status == 0)
+                                            <span class="badge badge-warning">PENDING</span>
+                                        @elseif ($job->job_status == 1)
+                                            <span class="badge badge-success">ACTIVE</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="row">
                                             {{-- to update --}}
