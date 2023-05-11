@@ -48,15 +48,40 @@ Route::get('/create_job', [App\Http\Controllers\JobController::class, 'create'])
 
 Route::post('/store_job', [App\Http\Controllers\JobController::class, 'store'])->name('store_job');
 
-// Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list'])->name('job-list');
+Route::get('/edit_job', [App\Http\Controllers\JobController::class, 'edit'])->name('edit_job');
 
 Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list_activity'])->name('job-list');
 
 Route::get('/search', [App\Http\Controllers\JobController::class, 'search'])->name('search');
 
-Route::get('/jobview/{id}', [App\Http\Controllers\JobController::class, 'jobview'])->name('jobview');
+Route::get('/jobview', [App\Http\Controllers\JobController::class, 'jobview'])->name('jobview');
+
+Route::put('job/{id}/update-status', 'JobController@startJob')->name('job.update.status');
+
+Route::put('job/{id}/complete-status', 'JobController@completeJob')->name('job.complete.status');
+
+
+
+Route::get('/tv31', [App\Http\Controllers\TvController::class, 'index'])->name('tv31');
+
+Route::get('/tv32', [App\Http\Controllers\TvController::class, 'tv32'])->name('tv32');
+
 
 // auth routes
 // -----------
+//client
+Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->name('client');
+Route::post('/client', [App\Http\Controllers\ClientController::class, 'store'])->name('store');
+Route::get('/clientedit-{id}', [App\Http\Controllers\ClientController::class, 'clientedit'])->name('clientedit');
+Route::put('/clientedit-{id}', [App\Http\Controllers\ClientController::class, 'clientupdate'])->name('clientupdate');
+Route::delete('/client/delete', [App\Http\Controllers\ClientController::class, 'delete'])->name('delete_client');
+// Route::resource('/client',App\Http\Controllers\ClientController::class);
+
+//department
+Route::get('/department', [App\Http\Controllers\DepartmentController::class, 'index'])->name('departmebt');
+Route::post('/department', [App\Http\Controllers\DepartmentController::class, 'departmentstore'])->name('departmentstore');
+
+// tv
+Route::get('/designing', [App\Http\Controllers\TvController::class, 'index'])->name('designing');
 
 Auth::routes();

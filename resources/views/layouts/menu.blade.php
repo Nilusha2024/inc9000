@@ -8,8 +8,12 @@
         $permissions_for_general = [1];
         $permissions_for_home = [1, 2];
         $permissions_for_user = [1, 2];
+        $permissions_for_location = [1, 2];
         $permissions_for_job = [1, 2];
+        $permissions_for_client = [1, 2];
+        $permissions_for_department = [1, 2];
         $permissions_for_job_mobile = [3];
+        $permissions_for_tv = [1, 2];
         
     @endphp
 
@@ -56,4 +60,29 @@
             <p>Job List</p>
         </a>
     @endif
+
+    {{-- Client --}}
+    @if (in_array($user_role, $permissions_for_client))
+        <a href="client" class="nav-link {{ Request::is('client') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users"></i>
+            <p>Client</p>
+        </a>
+    @endif
+
+    {{-- Department --}}
+    @if (in_array($user_role, $permissions_for_department))
+        <a href="department" class="nav-link {{ Request::is('department') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user"></i>
+            <p>Department</p>
+        </a>
+    @endif
+
+    {{-- TV --}}
+    @if (in_array($user_role, $permissions_for_tv))
+        <a href="designing" class="nav-link">
+            <i class="fas fa-tv" aria-hidden="true"></i>
+            <p>Designing</p>
+        </a>
+    @endif
+
 </li>

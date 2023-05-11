@@ -8,7 +8,7 @@ class JobActivity extends Model
 {
     protected $table = 'job_activity';
 
-    public $fillable = ['id', 'job_id', 'department_id', 'employee_id'];
+    public $fillable = [ 'job_id', 'department_id', 'employee_id'];
 
     public function job()
     {

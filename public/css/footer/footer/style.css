@@ -1,0 +1,19 @@
+.clear{ display: block; clear: both; visibility: hidden; line-height: 0; height: 0; zoom: 1; }
+.clear-fix{ zoom: 1; }
+.clear-fix:after{ content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
+
+.container{ padding: 0px; margin: 0px auto; /* position: relative; */ }
+.column, .columns{ float: left; position: relative; min-height: 1px; }
+.three{ width: 25%; }
+.gdlr-item{ margin: 0px 15px 20px; min-height: 1px; }
+
+.footer-wrapper{ position: relative; background-repeat: no-repeat; background-position: right top; }
+.footer-wrapper a { cursor: pointer; }
+.footer-wrapper .widget.gdlr-widget { margin-bottom: 60px; }
+.footer-wrapper .gdlr-widget-title { margin-bottom: 25px; }
+.footer-container{ padding-top: 60px; }
+.ie7 .footer-wrapper{ overflow: hidden; }
+.copyright-left { margin: 0px 15px; float: left; }
+.copyright-right { margin: 0px 15px; float: right; }
+.copyright-wrapper{ border-top-width: 1px; border-top-style: solid; }
+.copyright-container{ padding: 25px 0px; }

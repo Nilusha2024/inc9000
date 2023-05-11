@@ -2,12 +2,14 @@
 
 @section('content')
 
+    {{-- job create --}}
+
     {{-- header section --}}
     <section class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2 class="text-black-50">Manage jobs</h2>
+                    <h2 class="text-black-50">Create job</h2>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -75,9 +77,10 @@
                             {{-- job no --}}
                             <div class="col-sm-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('job_no') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('job_no') is-invalid @enderror"
                                         id="job_no" name="job_no" value="{{ old('job_no') }}"
-                                        placeholder="Enter job number">
+                                        placeholder="Enter job number" min="0"
+                                        oninput="this.value = Math.abs(this.value)">
                                     <label for="job_no" style="font-weight: bold">Job No:</label>
                                     @error('job_no')
                                         <span class="error invalid-feedback">{{ $message }}</span>
@@ -115,9 +118,10 @@
                             {{-- job client ref --}}
                             <div class="col-sm-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control @error('job_client_ref') is-invalid @enderror"
+                                    <input type="number" class="form-control @error('job_client_ref') is-invalid @enderror"
                                         id="job_client_ref" name="job_client_ref" value="{{ old('job_client_ref') }}"
-                                        placeholder="Enter job client reference number">
+                                        placeholder="Enter job client reference number" min="0"
+                                        oninput="this.value = Math.abs(this.value)">
                                     <label for="job_client_ref" style="font-weight: bold">Client Ref No:</label>
                                     @error('job_client_ref')
                                         <span class="error invalid-feedback">{{ $message }}</span>
@@ -135,7 +139,7 @@
                                 <div class="form-floating">
                                     <input type="date" class="form-control @error('job_order_date') is-invalid @enderror"
                                         id="job_order_date" name="job_order_date" value="{{ old('job_order_date') }}"
-                                        placeholder="Enter job number">
+                                        placeholder="Enter job order date">
                                     <label for="job_order_date" style="font-weight: bold">Job order date</label>
                                     @error('job_order_date')
                                         <span class="error invalid-feedback">{{ $message }}</span>
@@ -150,7 +154,7 @@
                                     <input type="date"
                                         class="form-control @error('job_deliver_date') is-invalid @enderror"
                                         id="job_deliver_date" name="job_deliver_date" value="{{ old('job_deliver_date') }}"
-                                        placeholder="Enter job number">
+                                        placeholder="Enter job deliver date">
                                     <label for="job_deliver_date" style="font-weight: bold">Job deliver date</label>
                                     @error('job_deliver_date')
                                         <span class="error invalid-feedback">{{ $message }}</span>
@@ -179,10 +183,9 @@
 
                         </div>
 
-                        <hr>
 
-                        <div class="card border-0 shadow-none">
-                            <div class="card-header">
+                        <div class="card border-0 shadow-none mt-5">
+                            <div class="card-header" style="background-color: transparent;">
                                 <h5>Style Details</h5>
                             </div>
 
@@ -218,7 +221,8 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select id="style_design" class="form-control" name="style_design">
+                                                <select id="style_design" class="form-control" name="style_design"
+                                                    onchange="onDesignSelect()">
                                                     <option value="" disabled selected hidden>
                                                         Select a design
                                                     </option>
@@ -317,7 +321,7 @@
                         </div>
 
                         <div class="card border-0 shadow-none">
-                            <div class="card-header">
+                            <div class="card-header" style="background-color: transparent;">
                                 <h5>Design references</h5>
                             </div>
                             <div class="card-body">
@@ -359,7 +363,7 @@
                         </div>
 
                         <div class="card border-0 shadow-none">
-                            <div class="card-header">
+                            <div class="card-header" style="background-color: transparent;">
                                 <h5>Extras</h5>
                             </div>
                             <div class="card-body">
@@ -406,7 +410,7 @@
                     <section class="content mt-3">
 
                         <div class="card border-0 shadow-none">
-                            <div class="card-header">
+                            <div class="card-header" style="background-color: transparent;">
                                 <h5>Department Selection</h5>
                             </div>
                             <div class="card-body">
@@ -542,8 +546,7 @@
                     </section>
 
                     <div class="d-flex flex-row-reverse mt-1 mb-2 me-2">
-                        <button type="submit" class="btn m-1 text-bold"
-                            style="background-image: linear-gradient(to right, #a8ff78 , #78ffd6)"
+                        <button type="submit" class="btn btn-primary border-0 m-1 text-bold bg-gr-blue"
                             onclick="submitJobTicket()">Submit
                             job ticket</button>
                     </div>
@@ -554,12 +557,39 @@
         </div>
     </section>
 
-
     {{-- re importing jQuery because it won't load for some reason  --}}
     <script src="plugins/jquery/jquery.min.js"></script>
 
     {{-- custom script --}}
     <script>
+        // on design select : upon selecting the design, change the available options accordingly
+        // ----------------   ------------------------------------------------------------------
+
+        function onDesignSelect() {
+
+            let select_design = document.getElementById('style_design');
+            let design = select_design.options[select_design.selectedIndex].text;
+
+            if (design != "T-shirt") {
+
+                $('#style_sleeve').val('0');
+                $('#style_neck').val('0');
+
+                $('#style_sleeve').prop("disabled", true);
+                $('#style_neck').prop("disabled", true);
+            } else {
+
+                $('#style_sleeve').val('');
+                $('#style_neck').val('');
+
+                $('#style_sleeve').prop("disabled", false);
+                $('#style_neck').prop("disabled", false);
+            }
+
+
+        }
+
+
         // append tr : appends a table row to the styles table when the add button is clicked
         // ---------   ----------------------------------------------------------------------
 
@@ -577,37 +607,63 @@
             let style_neck = select_style_neck.options[select_style_neck.selectedIndex].text;
             let style_size = select_style_size.options[select_style_size.selectedIndex].text;
 
-            let style_qty = $('#style_qty').val();
+            let style_category_val = select_style_category.options[select_style_category.selectedIndex].value;
+            let style_design_val = select_style_design.options[select_style_design.selectedIndex].value;
+            let style_sleeve_val = select_style_sleeve.options[select_style_sleeve.selectedIndex].value;
+            let style_neck_val = select_style_neck.options[select_style_neck.selectedIndex].value;
+            let style_size_val = select_style_size.options[select_style_size.selectedIndex].value;
 
-            // removed validations
+
+            let style_qty = $('#style_qty').val();
 
             let style_row_count = $('#style_row_count').val();
             $('#style_row_count').val(parseInt(style_row_count) + 1);
 
-            $('#styles_table_body').append('<tr id=tr_"' + style_row_count + '">' +
-                '<td>' + style_category + '<input class="style-category" type="hidden" value="' + style_category +
-                '" id="style_category_' + style_row_count + '" name="style_category_' + style_row_count +
-                '" /></td>' +
-                '<td>' + style_design + '<input class="style-design" type="hidden" value="' + style_design +
-                '" id="style_design_' +
-                style_row_count +
-                '" name="style_design_' + style_row_count + '" /></td>' +
-                '<td>' + style_sleeve + '<input class="style-sleeve" type="hidden" value="' + style_sleeve +
-                '" id="style_sleeve_' + style_row_count + '" name="style_sleeve_' + style_row_count +
-                '" /></td>' +
-                '<td>' + style_neck + '<input class="style-neck" type="hidden" value="' + style_neck +
-                '" id="style_neck_' + style_row_count + '" name="style_neck_' + style_row_count +
-                '" /></td>' +
-                '<td>' + style_size +
-                '<input class="style-size" type="hidden" value="' +
-                style_size + '" id="style_size_' + style_row_count + '" name="style_size_' + style_row_count +
-                '" /></td>' +
-                '<td>' + style_qty +
-                '<input class="style-qty" type="hidden" value="' +
-                style_qty + '" id="style_qty_' + style_row_count + '" name="style_qty_' + style_row_count +
-                '" /></td>' +
-                '<td style="text-align:center"><button type="button" class="btn btn-danger btn-sm" onclick="delete_row(this)"><span class="fas fa-eraser"></span></button></td>' +
-                '</tr>');
+            // style append validations
+
+            if (style_category_val == "") {
+                validationWarning("Style category not selected", "Please select a category for your style");
+            } else if (style_design_val == "") {
+                validationWarning("Style design not selected", "Please select a design for your style");
+            } else if (style_sleeve_val == "") {
+                validationWarning("Style sleeve not selected", "Please select a sleeve for your style");
+            } else if (style_neck_val == "") {
+                validationWarning("Style neck type not selected", "Please select a neck type for your style");
+            } else if (style_size_val == "") {
+                validationWarning("Style size not selected", "Please select a size for your style");
+            } else if (style_qty <= 0) {
+                validationWarning("Style quantity is 0",
+                    "Please increase the quantity for your style");
+            } else {
+
+                // if all is valid
+
+                $('#styles_table_body').append('<tr id=tr_"' + style_row_count + '">' +
+                    '<td>' + style_category + '<input class="style-category" type="hidden" value="' + style_category +
+                    '" id="style_category_' + style_row_count + '" name="style_category_' + style_row_count +
+                    '" /></td>' +
+                    '<td>' + style_design + '<input class="style-design" type="hidden" value="' + style_design +
+                    '" id="style_design_' +
+                    style_row_count +
+                    '" name="style_design_' + style_row_count + '" /></td>' +
+                    '<td>' + style_sleeve + '<input class="style-sleeve" type="hidden" value="' + style_sleeve +
+                    '" id="style_sleeve_' + style_row_count + '" name="style_sleeve_' + style_row_count +
+                    '" /></td>' +
+                    '<td>' + style_neck + '<input class="style-neck" type="hidden" value="' + style_neck +
+                    '" id="style_neck_' + style_row_count + '" name="style_neck_' + style_row_count +
+                    '" /></td>' +
+                    '<td>' + style_size +
+                    '<input class="style-size" type="hidden" value="' +
+                    style_size + '" id="style_size_' + style_row_count + '" name="style_size_' + style_row_count +
+                    '" /></td>' +
+                    '<td>' + style_qty +
+                    '<input class="style-qty" type="hidden" value="' +
+                    style_qty + '" id="style_qty_' + style_row_count + '" name="style_qty_' + style_row_count +
+                    '" /></td>' +
+                    '<td style="text-align:center"><button type="button" class="btn btn-danger btn-sm" onclick="delete_row(this)"><span class="fas fa-eraser"></span></button></td>' +
+                    '</tr>');
+
+            }
 
         }
 
@@ -641,7 +697,6 @@
 
         }
 
-
         // submit job ticket : passes the entire page data to the job controller
         // -----------------   ------------------------------------------------
 
@@ -655,7 +710,6 @@
             let job_order_date = $('#job_order_date').val();
             let job_deliver_date = $('#job_deliver_date').val();
             let job_title = $('#job_title').val();
-            let job_neck_type = $('#job_neck_type').val();
             let job_material_option = $('#job_material_option').val();
             let job_packing = $('#job_packing').val();
             let job_comment = $('#job_comment').val() != '' ? $('#job_comment').val() : 'No comment';
@@ -672,147 +726,194 @@
 
             let style_row_count = $('#style_row_count').val();
 
-            // validations removed ... for now
+            // styles
 
+            let style_categories = [];
+            let style_designs = [];
+            let style_sleeves = [];
+            let style_necks = [];
+            let style_sizes = [];
+            let style_qtys = [];
+
+            // departments
+
+            let marked_departments = [];
+            let marked_start_dates = [];
+            let marked_end_dates = [];
+
+            // pushing in elements
+
+            $('.style-category').each(function() {
+                style_categories.push($(this).val());
+            })
+
+            $('.style-design').each(function() {
+                style_designs.push($(this).val());
+            })
+
+            $('.style-sleeve').each(function() {
+                style_sleeves.push($(this).val());
+            })
+
+            $('.style-neck').each(function() {
+                style_necks.push($(this).val());
+            })
+
+            $('.style-size').each(function() {
+                style_sizes.push($(this).val());
+            })
+
+            $('.style-qty').each(function() {
+                style_qtys.push($(this).val());
+            })
+
+            $('.department-marked').each(function() {
+                marked_departments.push($(this).val());
+            })
+
+            $('.start-date-marked').each(function() {
+                marked_start_dates.push($(this).val());
+            })
+
+            $('.end-date-marked').each(function() {
+                marked_end_dates.push($(this).val());
+            })
+
+
+            if (job_title == "") {
+                validationWarning("Job title empty", "Please enter your job title before submitting");
+            } else if (job_no == "") {
+                validationWarning("Job number empty", "Please enter your job number before submitting");
+            } else if (job_client == null) {
+                validationWarning("Client not selected", "Please select a client before submitting");
+            } else if (job_client_ref == "") {
+                validationWarning("Client reference number empty",
+                    "Please enter your client reference number before submitting");
+            } else if (job_order_date == "") {
+                validationWarning("Order date not set", "Please set an order date to the job before submitting");
+            } else if (job_deliver_date == "") {
+                validationWarning("Deliver date not set", "Please set an deliver date to the job before submitting");
+            } else if (job_material_option == "") {
+                validationWarning("Material option empty", "Please enter your material option before submitting");
+            } else if (style_row_count == 0) {
+                validationWarning("No styles added", "Please add at least one style before submitting");
+            } else if (job_design_image_1 == null && job_design_image_2 == null) {
+                validationWarning("Design images not selected",
+                    "Please select at least one design image before submitting");
+            } else if (job_packing == "") {
+                validationWarning("Packing details empty", "Please enter your packing details before submitting");
+            } else if (marked_departments.length == 0) {
+                validationWarning("No departments selected", "Please select at least one department before submitting");
+            } else if (marked_start_dates.includes("") || marked_end_dates.includes("")) {
+                validationWarning("Missing department dates",
+                    "Please make sure you have set all your department start and end dates before submitting");
+            } else {
+
+                // if all is valid
+
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Confirm job ticket submission ?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Submit',
+                    denyButtonText: `Cancel`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        // ajax setup
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        // Form Data
+                        // ---------
+
+                        let form_data = new FormData();
+
+                        form_data.append('job_no', job_no);
+                        form_data.append('job_client', job_client);
+                        form_data.append('job_client_ref', job_client_ref);
+                        form_data.append('job_order_date', job_order_date);
+                        form_data.append('job_deliver_date', job_deliver_date);
+                        form_data.append('job_title', job_title);
+                        form_data.append('job_material_option', job_material_option);
+                        form_data.append('job_design_image_1', job_design_image_1);
+                        form_data.append('job_design_image_2', job_design_image_2);
+                        form_data.append('job_comment', job_comment);
+                        form_data.append('job_packing', job_packing);
+                        form_data.append('style_categories', style_categories);
+                        form_data.append('style_designs', style_designs);
+                        form_data.append('style_sleeves', style_sleeves);
+                        form_data.append('style_necks', style_necks);
+                        form_data.append('style_sizes', style_sizes);
+                        form_data.append('style_qtys', style_qtys);
+                        form_data.append('marked_departments', marked_departments);
+                        form_data.append('marked_start_dates', marked_start_dates);
+                        form_data.append('marked_end_dates', marked_end_dates);
+
+                        $.ajax({
+                            url: "{{ url('store_job') }}",
+                            method: "POST",
+                            processData: false,
+                            contentType: false,
+                            data: form_data,
+                            success: function(response) {
+                                if (response.status == 200) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: response.message,
+                                        showConfirmButton: 1
+                                    }).then(function() {
+                                        location.reload();
+                                    });
+                                } else if (response.status == 500) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        footer: response.error,
+                                        showConfirmButton: 1
+                                    });
+                                }
+                            },
+                            // server side validation errors response
+                            error: function(err) {
+                                if (err.status == 422) {
+
+                                    // error object
+                                    console.log(err.responseJSON.errors);
+
+                                    // alert
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Invalid inputs',
+                                        text: 'Please id the validity of the data you entered and try again',
+                                        footer: response.error,
+                                        showConfirmButton: 1
+                                    });
+                                }
+                            },
+                        });
+
+                    }
+                });
+
+            }
+
+        }
+
+
+        // Making sweet alert fires less verbose
+        // -------------------------------------
+
+        function validationWarning(title, text) {
             Swal.fire({
-                icon: 'question',
-                title: 'Confirm job ticket submission ?',
-                showDenyButton: true,
-                confirmButtonText: 'Submit',
-                denyButtonText: `Cancel`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    // styles
-                    let style_categories = [];
-                    let style_designs = [];
-                    let style_sleeves = [];
-                    let style_necks = [];
-                    let style_sizes = [];
-                    let style_qtys = [];
-
-                    // departments
-                    let marked_departments = [];
-                    let marked_start_dates = [];
-                    let marked_end_dates = [];
-
-                    // pushing in elements
-                    $('.style-category').each(function() {
-                        style_categories.push($(this).val());
-                    })
-
-                    $('.style-design').each(function() {
-                        style_designs.push($(this).val());
-                    })
-
-                    $('.style-sleeve').each(function() {
-                        style_sleeves.push($(this).val());
-                    })
-
-                    $('.style-neck').each(function() {
-                        style_necks.push($(this).val());
-                    })
-
-                    $('.style-size').each(function() {
-                        style_sizes.push($(this).val());
-                    })
-
-                    $('.style-qty').each(function() {
-                        style_qtys.push($(this).val());
-                    })
-
-                    $('.department-marked').each(function() {
-                        marked_departments.push($(this).val());
-                    })
-
-                    $('.start-date-marked').each(function() {
-                        marked_start_dates.push($(this).val());
-                    })
-
-                    $('.end-date-marked').each(function() {
-                        marked_end_dates.push($(this).val());
-                    })
-
-                    // ajax setup
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    // Form Data
-                    // ---------
-
-                    let form_data = new FormData();
-
-                    form_data.append('job_no', job_no);
-                    form_data.append('job_client', job_client);
-                    form_data.append('job_client_ref', job_client_ref);
-                    form_data.append('job_order_date', job_order_date);
-                    form_data.append('job_deliver_date', job_deliver_date);
-                    form_data.append('job_title', job_title);
-                    form_data.append('job_neck_type', job_neck_type);
-                    form_data.append('job_material_option', job_material_option);
-                    form_data.append('job_design_image_1', job_design_image_1);
-                    form_data.append('job_design_image_2', job_design_image_2);
-                    form_data.append('job_comment', job_comment);
-                    form_data.append('job_packing', job_packing);
-                    form_data.append('style_categories', style_categories);
-                    form_data.append('style_designs', style_designs);
-                    form_data.append('style_sleeves', style_sleeves);
-                    form_data.append('style_necks', style_necks);
-                    form_data.append('style_sizes', style_sizes);
-                    form_data.append('style_qtys', style_qtys);
-                    form_data.append('marked_departments', marked_departments);
-                    form_data.append('marked_start_dates', marked_start_dates);
-                    form_data.append('marked_end_dates', marked_end_dates);
-
-                    $.ajax({
-                        url: "{{ url('store_job') }}",
-                        method: "POST",
-                        processData: false,
-                        contentType: false,
-                        data: form_data,
-                        success: function(response) {
-                            if (response.status == 200) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: response.message,
-                                    showConfirmButton: 1
-                                }).then(function() {
-                                    location.reload();
-                                });
-                            } else if (response.status == 500) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: response.message,
-                                    footer: response.error,
-                                    showConfirmButton: 1
-                                });
-                            }
-                        },
-                        // server side validation errors response
-                        error: function(err) {
-                            if (err.status == 422) {
-
-                                // error object
-                                console.log(err.responseJSON.errors);
-
-                                // alert
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Invalid inputs',
-                                    text: 'Please id the validity of the data you entered and try again',
-                                    footer: response.error,
-                                    showConfirmButton: 1
-                                });
-                            }
-                        },
-                    });
-
-                }
+                icon: "warning",
+                title: title,
+                text: text,
+                showConfirmButton: 1
             });
-
         }
     </script>
 

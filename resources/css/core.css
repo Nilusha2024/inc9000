@@ -47,6 +47,10 @@ body h5 {
     background-image: linear-gradient(to right, #d5ffbf, #c2ffed);
 }
 
+.bg-gr-blue {
+    background-image: linear-gradient(to right, #0099ff, #0072ff);
+}
+
 .bg-gr-amin {
     background-image: linear-gradient(to right, #8e2de2, #4a00e0);
 }

@@ -18,7 +18,10 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     {{-- custom styles --}}
-    @vite(['resources/css/auth.css'])
+    @vite(['public/css/auth.css'])
+
+    {{-- custom styles - alternate call --}}
+    <link rel="stylesheet" href="css/auth.css">
 
 </head>
 
@@ -31,11 +34,12 @@
             {{-- left --}}
             <div class="col-sm d-flex flex-column">
                 <div class="row justify-content-center">
-                    <img src="{{ URL::asset('image/threads-&-needles.png') }}" class="clip-art mt-2" alt="Your Image">
+                    <img src="{{ URL::asset('image/inc9000logo.jpg') }}" class="clip-art mt-2" alt="Your Image">
                 </div>
-                <div class="row mt-sm-5 mt-3">
+
+                {{-- <div class="row mt-sm-5 mt-3">
                     <h1 class="massive-header text-center">inc9000</h1>
-                </div>
+                </div> --}}
             </div>
 
             {{-- right --}}

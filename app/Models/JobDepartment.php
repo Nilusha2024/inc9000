@@ -10,6 +10,8 @@ class JobDepartment extends Model
 
     public $fillable = ['id', 'job_id', 'department_id', 'department_status', 'start_date', 'end_date'];
 
+    protected $casts = ['start_date' => 'datetime', 'end_date' => 'datetime'];
+
     public function job()
     {
         return $this->belongsTo('App\Models\Job', 'job_id', 'id');

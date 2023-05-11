@@ -1,0 +1,64 @@
+/* css for application core */
+/* ------------------------ */
+
+/* font imports */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+/* styles */
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+/* header font weights */
+
+body h1 {
+    font-weight: 800;
+}
+
+body h2 {
+    font-weight: 800;
+}
+
+body h3 {
+    font-weight: 800;
+}
+
+body h4 {
+    font-weight: 800;
+}
+
+body h5 {
+    font-weight: 800;
+}
+
+/* gradient backgrounds */
+
+.bg-gr-mint {
+    background-image: linear-gradient(to right, #a8ff78, #78ffd6);
+}
+
+.bg-gr-green {
+    background-image: linear-gradient(to right, #dce35b, #45b649);
+}
+
+.bg-gr-mint-light {
+    background-image: linear-gradient(to right, #d5ffbf, #c2ffed);
+}
+
+.bg-gr-mint-jo {
+    background-image: linear-gradient(to right, #f2e69c, #f6ff78);
+}
+
+.bg-gr-blue {
+    background-image: linear-gradient(to right, #0099ff, #0072ff);
+}
+
+.bg-gr-amin {
+    background-image: linear-gradient(to right, #8e2de2, #4a00e0);
+}
+
+.bg-gr-crimson {
+    background-image: linear-gradient(to right, #ed213a, #93291e);
+}

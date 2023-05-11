@@ -12,13 +12,23 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class JobController extends Controller
 {
     // return job view
     public function index()
     {
+        // set up has many
         $jobs = Job::get();
+
+        // Test out the aggregration with the join
+        // $jobsAlt = Job::with('styles')->leftJoin('job_detail', function ($join) {
+        //     $join->on('job.id', '=', 'job_detail.job_id');
+        // })
+        //     ->select('job.id', 'job.client_id', 'job.job_title', 'job.job_status', 'job.order_date', 'job.deliver_date', DB::raw('sum(job_detail.qty) as qty'))
+        //     ->groupBy('job.id')
+        //     ->get();
 
         return view('job')->with(['jobs' => $jobs]);
     }
@@ -26,8 +36,11 @@ class JobController extends Controller
     // return job details view
     public function details()
     {
+
         $jobId = request('job');
         $job = Job::find($jobId);
+
+
         $styleDetailRecords = JobDetail::where('job_id', $jobId)->get();
         $departmentDetailRecords = JobDepartment::where('job_id', $jobId)->get();
 
@@ -48,6 +61,8 @@ class JobController extends Controller
     {
 
         try {
+            $user = Auth::user();
+
             // Job insert :
             $job = Job::create([
                 'job_no' => $request->input('job_no'),
@@ -62,6 +77,7 @@ class JobController extends Controller
                 'job_status' => 0,
             ]);
 
+          
             // Job design image insert : image 1
 
             if ($request->hasFile('job_design_image_1')) {
@@ -98,6 +114,12 @@ class JobController extends Controller
             $sizes = explode(",", $request->input('style_sizes'));
             $necks = explode(",", $request->input('style_necks'));
             $qtys = explode(",", $request->input('style_qtys'));
+
+            JobActivity::create([
+                'job_id' => $jobId, 
+                'department_id' => 4,
+                'employee_id' => $user->id
+            ]);
 
             for ($i = 0; $i < count($designs); $i++) {
                 JobDetail::create([
@@ -154,15 +176,17 @@ class JobController extends Controller
 
     public function list_activity()
     {
+        $user = Auth::user();
         $client = Client::get();
         $department = Department::get();
 
         $jobactivity = JobActivity::with(['job', 'user', 'department',])->get();
         $jobs = Job::with(['client'])
-            ->orderBy('job_status', 'DESC')
+            ->orderBy(DB::raw('(CASE WHEN job_status = 2 THEN 0 WHEN job_status = 0 THEN 1 WHEN job_status IN (3, 4) THEN 2 WHEN job_status = 1 THEN 3 ELSE 4 END)'), 'asc')
+            ->orderBy('job_status', 'asc')
             ->get();
 
-        return view('job-list')->with(['jobactivity' => $jobactivity, 'jobs' => $jobs, 'client' => $client, 'department' => $department]);
+        return view('job-list')->with(['jobactivity' => $jobactivity, 'jobs' => $jobs, 'client' => $client, 'department' => $department, 'user' => $user]);
     }
 
     public function search(Request $request)
@@ -173,20 +197,21 @@ class JobController extends Controller
             $clients = Client::get();
             $jobs = Job::with(['client'])
                 ->where('job_no', 'like', '%' . $request->search . '%')
-                ->orderBy('job_status', 'DESC')
+                ->orderBy(DB::raw('(CASE WHEN job_status = 2 THEN 0 WHEN job_status = 0 THEN 1 WHEN job_status IN (3, 4) THEN 2 WHEN job_status = 1 THEN 3 ELSE 4 END)'), 'asc')
+                ->orderBy('job_status', 'asc')
                 ->get();
 
             if ($jobs) {
                 foreach ($jobs as $job) {
-                    if ($job->job_status ==  '1') {
+                    if ($job->job_status ==  '2') {
                         $output .=
-                            '<a href="./jobview/' . $job->id . '">
+                            '<a href="jobview?job=' . $job->id . '">
 
                             <div class="" id="search-results">
                                 <div class="card-body ps-4 pe-4 pb-4">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-dark mb-3 " style="width: 25rem; background: rgba(0, 128, 0, 0.1);">
-                                            <div class="card-header">Job No:' . $job->job_no . '</div>
+                                        <div class="card border-dark mb-3 bg-gr-mint-light" style="width: 25rem; ">
+                                            <div class="card-header">Job No: ' . $job->job_no . '</div>
                                             <div class="card-body text-dark">
                                                 <h5 class="card-title">Customer:</h5>
                                                 <p class="card-text">' . $job['client']['first_name'] . '</p>
@@ -196,7 +221,7 @@ class JobController extends Controller
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <small class="text-muted">
-                                                     Active
+                                                    ONGOING
                                                     </small>
                                                 </div>
                                             </div>
@@ -208,12 +233,12 @@ class JobController extends Controller
                     ';
                     } else {
                         $output .=
-                            '<a href="./jobview/' . $job->id . '">
+                            '<a href="jobview?job=' . $job->id . '">
                             <div class="" id="search-results">
                                 <div class="card-body ps-4 pe-4 pb-4">
                                     <div class="d-flex justify-content-center">
                                         <div class="card border-dark mb-3 " style="width: 25rem;">
-                                            <div class="card-header">Job No:' . $job->job_no . '</div>
+                                            <div class="card-header">Job No: ' . $job->job_no . '</div>
                                             <div class="card-body text-dark">
                                                 <h5 class="card-title">Customer:</h5>
                                                 <p class="card-text">' . $job['client']['first_name'] . '</p>
@@ -223,7 +248,7 @@ class JobController extends Controller
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <small class="text-muted">
-                                                    Pending
+
                                                     </small>
                                                 </div>
                                             </div>
@@ -242,9 +267,12 @@ class JobController extends Controller
     }
 
     // return job
-    public function jobview($id)
+    public function jobview()
     {
-        $jobactivity = JobActivity::with(['job', 'user', 'department'])->find($id);
+
+        $jobId = request('job');
+        $jobactivity = JobActivity::with(['job', 'user', 'department'])->where('job_id', $jobId)->first();
+
         $jobs = Job::get();
         $clients = Client::get();
         $department = Department::get();
@@ -252,16 +280,31 @@ class JobController extends Controller
         return view('jobview')->with(['jobs' => $jobs, 'clients' => $clients, 'jobactivity' => $jobactivity, 'department' => $department]);
     }
 
-    // public function jobview($id)
-    // {
-    //     $jobactivity = JobActivity::with(['job','user','department',])->get();
-    //     $job = Job::find($id);
-    //     $clients = Client::get();
-    //     $department = Department::get();
+    public function startJob($id)
+    {
 
+        $user = Auth::user();
 
-    //     return view('jobview')->with(['jobs' => $job, 'clients' => $clients, 'jobactivity' => $jobactivity, 'department' => $department]);
-    // }
+        $job = Job::findOrFail($id);
+        $job->job_status = 2;
+        $job->save();
+        $department = JobDepartment::where('job_id', $id)->where('department_id', $user->department_id)->firstOrFail();
+        $department->department_status = 2;
+        $department->save();
 
+        return redirect()->route('job-list');
+    }
 
+    public function completeJob($id)
+    {
+        $user = Auth::user();
+        $job = Job::findOrFail($id);
+        $job->job_status = 1;
+        $job->save();
+        $department = JobDepartment::where('job_id', $id)->where('department_id', $user->department_id)->firstOrFail();
+        $department->department_status = 1;
+        $department->save();
+
+        return redirect()->route('job-list');
+    }
 }

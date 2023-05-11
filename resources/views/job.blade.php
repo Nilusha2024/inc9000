@@ -26,7 +26,7 @@
                 <div class="card-header m-3 mb-0" style="background-color: transparent;">
                     <div class="d-flex justify-content-between">
                         <h5>Job list</h5>
-                        <a href="{{ route('create_job') }}" class="btn btn-primary text-bold">+ JOB</a>
+                        <a href="{{ route('create_job') }}" class="btn btn-primary text-bold text-bold bg-gr-blue">+ JOB</a>
                     </div>
                 </div>
                 <div class="card-body ps-4 pe-4 pb-4">
@@ -34,7 +34,8 @@
                     <table id="dataTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Job ID</th>
+                                <th>#</th>
+                                <th>Job No</th>
                                 <th>Client</th>
                                 <th>Job title</th>
                                 <th>Order date</th>
@@ -44,25 +45,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jobs as $job)
+                            @foreach ($jobs as $key => $job)
                                 <tr>
-                                    <td>{{ $job->id }}</td>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $job->job_no }}</td>
                                     <td>{{ $job['client']['first_name'] }}</td>
                                     <td>{{ $job->job_title }}</td>
-                                    <td>{{ $job->order_date }}</td>
-                                    <td>{{ $job->deliver_date }}</td>
+                                    <td>{{ $job->order_date->toDateString() }}</td>
+                                    <td>{{ $job->deliver_date->toDateString() }}</td>
                                     <td>
                                         @if ($job->job_status == 0)
-                                            <span class="badge badge-warning">PENDING</span>
+                                            <span class="badge badge-info">PENDING</span>
                                         @elseif ($job->job_status == 1)
-                                            <span class="badge badge-success">ACTIVE</span>
+                                            <span class="badge badge-success">COMPLETE</span>
+                                        @elseif ($job->job_status == 2)
+                                            <span class="badge badge-warning">ONGOING</span>
+                                        @elseif ($job->job_status == 3)
+                                            <span class="badge badge-secondary">HOLD</span>
+                                        @elseif ($job->job_status == 4)
+                                            <span class="badge badge-danger">NOT READY</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="row">
                                             {{-- to update --}}
                                             <div class="col">
-                                                <a href="{{ route('job', ['job' => $job]) }}"
+                                                <a href="{{ route('edit_job', ['job' => $job]) }}"
                                                     class="btn btn-default btn-sm btn-flat" style="width: 100%">
                                                     Edit
                                                 </a>
