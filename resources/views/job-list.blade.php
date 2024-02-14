@@ -29,14 +29,15 @@
                     <input type="search" name="search" id="search" class="form-control rounded" placeholder="Search" />
                 </div>
             </div>
+            <br>
             <div class="all-data" id="all-data">
                 @foreach ($jobs as $job)
-                    <a href="{{ route('jobview', ['job' => $job]) }}">
+                    <a href="{{ route('jobview', ['job' => $job]) }}" style="text-decoration:none">
                         <div class="" id="search-results">
-                            @if ($job['job_status'] == 1)
+                            @if ($job['department_status'] == 1)
                                 <div class="card-body ps-4 pe-4 pb-4">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-dark mb-3 bg-gr-mint-light" style="width: 25rem;">
+                                        <div class="card mb-3 bg-gr-mint-light" style="width: 25rem;">
                                             <div class="card-header">Job No: {{ $job->job_no }}</div>
                                             <div class="card-body text-dark">
                                                 <h5 class="card-title">Customer:</h5>
@@ -46,15 +47,15 @@
                                             </div>
                                             <div class="card-header">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    @if ($job['job_status'] == 0)
+                                                    @if ($job['department_status'] == 0)
                                                         <span class="badge badge-info">PENDING</span>
-                                                    @elseif ($job['job_status'] == 1)
+                                                    @elseif ($job['department_status'] == 1)
                                                         <span class="badge badge-success">COMPLETE</span>
-                                                    @elseif ($job['job_status'] == 2)
+                                                    @elseif ($job['department_status'] == 2)
                                                         <span class="badge badge-warning">ONGOING</span>
-                                                    @elseif ($job['job_status'] == 3)
+                                                    @elseif ($job['department_status'] == 3)
                                                         <span class="badge badge-secondary">HOLD</span>
-                                                    @elseif ($job['job_status'] == 4)
+                                                    @elseif ($job['department_status'] == 4)
                                                         <span class="badge badge-secondary">NOT READY</span>
                                                     @endif
                                                     </p>
@@ -69,10 +70,10 @@
                                     </div>
 
                                 </div>
-                            @elseif ($job['job_status'] == 2)
+                            @elseif ($job['department_status'] == 2)
                                 <div class="card-body ps-4 pe-4 pb-4">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-dark mb-3 bg-gr-mint-jo" style="width: 25rem;">
+                                        <div class="card mb-3 bg-gr-mint-jo" style="width: 25rem;">
                                             <div class="card-header">Job No: {{ $job->job_no }}</div>
                                             <div class="card-body text-dark">
                                                 <h5 class="card-title">Customer:</h5>
@@ -82,15 +83,15 @@
                                             </div>
                                             <div class="card-header">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    @if ($job['job_status'] == 0)
+                                                    @if ($job['department_status'] == 0)
                                                         <span class="badge badge-info">PENDING</span>
-                                                    @elseif ($job['job_status'] == 1)
+                                                    @elseif ($job['department_status'] == 1)
                                                         <span class="badge badge-success">COMPLETE</span>
-                                                    @elseif ($job['job_status'] == 2)
+                                                    @elseif ($job['department_status'] == 2)
                                                         <span class="badge badge-warning">ONGOING</span>
-                                                    @elseif ($job['job_status'] == 3)
+                                                    @elseif ($job['department_status'] == 3)
                                                         <span class="badge badge-secondary">HOLD</span>
-                                                    @elseif ($job['job_status'] == 4)
+                                                    @elseif ($job['department_status'] == 4)
                                                         <span class="badge badge-secondary">NOT READY</span>
                                                     @endif
                                                     </p>
@@ -106,7 +107,7 @@
                             @else
                                 <div class="card-body ps-4 pe-4 pb-4">
                                     <div class="d-flex justify-content-center">
-                                        <div class="card border-dark mb-3 " style="width: 25rem; ">
+                                        <div class="card mb-3 " style="width: 25rem; ">
                                             <div class="card-header">Job No: {{ $job->job_no }}</div>
                                             <div class="card-body text-dark">
                                                 <h5 class="card-title">Customer:</h5>
@@ -116,15 +117,15 @@
                                             </div>
                                             <div class="card-header">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    @if ($job['job_status'] == 0)
+                                                    @if ($job['department_status'] == 0)
                                                         <span class="badge badge-info">PENDING</span>
-                                                    @elseif ($job['job_status'] == 1)
+                                                    @elseif ($job['department_status'] == 1)
                                                         <span class="badge badge-success">COMPLETE</span>
-                                                    @elseif ($job['job_status'] == 2)
+                                                    @elseif ($job['department_status'] == 2)
                                                         <span class="badge badge-warning">ONGOING</span>
-                                                    @elseif ($job['job_status'] == 3)
+                                                    @elseif ($job['department_status'] == 3)
                                                         <span class="badge badge-secondary">HOLD</span>
-                                                    @elseif ($job['job_status'] == 4)
+                                                    @elseif ($job['department_status'] == 4)
                                                         <span class="badge badge-secondary">NOT READY</span>
                                                     @endif
                                                     </p>
@@ -141,34 +142,60 @@
                     </a>
                 @endforeach
             </div>
-
         </div>
-        <div class="search-results" id="content"></div>
         </div>
     </section>
-
+    <div class="search-results" id="content"></div>
     <script type="text/javascript">
+        // $(document).ready(function() {
+        //     $("#search").on('keyup', function() {
+        //         $search = $(this).val();
+        //         if ($search) {
+        //             $('.all-data ').hide();
+        //             $('.search-results').show();
+        //         } else {
+        //             $('.all-data ').show();
+        //             $('.search-results').hide();
+        //         }
+
+        //         $.ajax({
+        //             type: 'get',
+        //             url: '{{ URL::to('search') }}',
+        //             data: {
+        //                 'search': $search
+        //             },
+        //             success: function(data) {
+        //                 $('#content').html(data)
+        //             }
+
+        //         });
+        //     });
+        // });
+
+
         $(document).ready(function() {
             $("#search").on('keyup', function() {
-                $search = $(this).val();
+                const $search = $(this).val();
+                const $allData = $('.all-data');
+                const $searchResults = $('.search-results');
+
                 if ($search) {
-                    $('.all-data ').hide();
-                    $('.search-results').show();
+                    $allData.hide();
+                    $searchResults.show();
                 } else {
-                    $('.all-data ').show();
-                    $('.search-results').hide();
+                    $allData.show();
+                    $searchResults.hide();
                 }
 
                 $.ajax({
                     type: 'get',
-                    url: '{{ URL::to('search') }}',
+                    url: '{{ URL::to('search') }}', 
                     data: {
                         'search': $search
                     },
                     success: function(data) {
-                        $('#content').html(data)
+                        $('#content').html(data);
                     }
-
                 });
             });
         });

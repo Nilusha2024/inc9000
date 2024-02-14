@@ -1,0 +1,128 @@
+/* html,body {
+    padding:0;
+    margin:0;
+    height:100%;
+    min-height:100%;
+  }
+ */
+ .body-style {
+    background-color: #f7f5f5
+} 
+​
+.body-style2 {
+    background-color: #fff9f9
+} 
+​
+/* table */
+.zui-table {
+    border: solid 3px #f40000;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.zui-table thead th {
+    background-color: #000000;
+    border: solid 3px #f6a7a7;
+    color: #6b3333;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.zui-table tbody td {
+    border: solid 3px #ff3c3c;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+/* table end */
+​
+/* table */
+
+
+table, th, td {
+    color: #000000;
+    text-align: center;
+    
+  }
+
+.yui-table {
+    border: solid 2px #000000;
+    border-collapse: collapse;
+    border-spacing: 30px;
+    font: normal 25px Arial, sans-serif;
+}
+
+
+.table-div{
+    border: solid 50px #ffffff00;
+
+}
+
+.yui-table thead th {
+    background-color: #ffffff;
+    border: solid 1px #ffffff;
+    color: #ffffff;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.yui-table tbody td {
+    border: solid 1px #000000;
+    color: #ffffff;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #000000;
+}
+/* table end */
+​
+.quad{
+width:50%;
+height:100%;
+float:left;
+}
+.line{
+height:50%;
+width:100%;
+}
+​
+​
+.equal, .equal > div[class*='col-'] {  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex:1 0 auto;
+}
+
+table, th, td {
+    color: #000000;
+    text-align: center;
+  }
+
+
+  /* slide show css */
+  
+  [data-component="slideshow"] .slide {
+	display: none;
+  text-align: center;
+}
+
+[data-component="slideshow"] .slide.active {
+	display: block;
+}
+
+.fo-colour{
+   color:rgb(69, 1, 105);
+}
+
+.fo-colour2{
+    color:#25098a;
+ }
+
+
+
+
+

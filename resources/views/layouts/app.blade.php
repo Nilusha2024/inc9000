@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
         crossorigin="anonymous" />
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -70,7 +71,7 @@
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="{{ route('profile') }}" class="btn btn-default btn-flat">Profile</a>
                             <a href="#" class="btn btn-default btn-flat float-right"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Sign out
@@ -102,13 +103,11 @@
         </footer>
     </div>
 
-    {{-- custom styles --}}
-    @vite(['public/css/core.css'])
+    {{-- custom styles with vite : --}}
+    @vite(['resources/css/core.css'])
 
-    <link rel="stylesheet" href="css/core.css">
-
-    @vite(['resources/css/app.css'])
-    @vite(['resources/js/app.js'])
+    {{--  In case vite doesn't work, use this : --}}
+    {{-- <link rel="stylesheet" href="css/core.css"> --}}
 
     @stack('third_party_scripts')
 
@@ -126,12 +125,16 @@
     <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <script src="dist/js/pages/dashboard2.js"></script>
 
+    {{-- bootstrap js  --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
+
     {{-- select2 search box cdn --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     {{-- sweet alert cdn --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
     <!-- Table search and export files js -->
 

@@ -5,14 +5,17 @@
         
         $user_role = Auth::user()->role_id;
         
-        $permissions_for_general = [1];
         $permissions_for_home = [1, 2];
         $permissions_for_user = [1, 2];
+        $permissions_for_location = [1, 2];
         $permissions_for_location = [1, 2];
         $permissions_for_job = [1, 2];
         $permissions_for_client = [1, 2];
         $permissions_for_department = [1, 2];
+        $permissions_for_client = [1, 2];
+        $permissions_for_department = [1, 2];
         $permissions_for_job_mobile = [3];
+        $permissions_for_tv = [1, 2];
         $permissions_for_tv = [1, 2];
         
     @endphp
@@ -25,14 +28,6 @@
         <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
             <i class="nav-icon fas fa-home"></i>
             <p>Home</p>
-        </a>
-    @endif
-
-    {{-- General --}}
-    @if (in_array($user_role, $permissions_for_general))
-        <a href="{{ route('general') }}" class="nav-link {{ Request::is('general') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-box"></i>
-            <p>General</p>
         </a>
     @endif
 
@@ -50,6 +45,15 @@
         <a href="{{ route('job') }}" class="nav-link {{ Request::is('job') ? 'active' : '' }}">
             <i class="nav-icon fas fa-dolly"></i>
             <p>Jobs</p>
+        </a>
+    @endif
+
+    {{-- Tokens --}}
+    @if (in_array($user_role, $permissions_for_job))
+        <a href="{{ route('job_department_token') }}"
+            class="nav-link {{ Request::is('job_department_token') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-box"></i>
+            <p>Tokens</p>
         </a>
     @endif
 
@@ -84,5 +88,39 @@
             <p>Designing</p>
         </a>
     @endif
+
+    {{-- TV --}}
+    @if (in_array($user_role, $permissions_for_tv))
+        <a href="cutting" class="nav-link">
+            <i class="fas fa-tv" aria-hidden="true"></i>
+            <p>Cutting</p>
+        </a>
+    @endif
+
+    {{-- TV --}}
+    @if (in_array($user_role, $permissions_for_tv))
+        <a href="printing" class="nav-link">
+            <i class="fas fa-tv" aria-hidden="true"></i>
+            <p>Printing</p>
+        </a>
+    @endif
+
+
+    {{-- TV --}}
+    @if (in_array($user_role, $permissions_for_tv))
+        <a href="sewing" class="nav-link">
+            <i class="fas fa-tv" aria-hidden="true"></i>
+            <p>Sewing</p>
+        </a>
+    @endif
+
+    {{-- TV --}}
+    @if (in_array($user_role, $permissions_for_tv))
+        <a href="pressing" class="nav-link">
+            <i class="fas fa-tv" aria-hidden="true"></i>
+            <p>Pressing</p>
+        </a>
+    @endif
+
 
 </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\JobInserted;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,9 +37,17 @@ Route::get('/edit_user', [App\Http\Controllers\UserController::class, 'edit'])->
 
 Route::put('/update_user', [App\Http\Controllers\UserController::class, 'update'])->name('update_user');
 
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+
+Route::put('/update_profile', [App\Http\Controllers\UserController::class, 'update_profile'])->name('update_profile');
+
 Route::delete('/delete_user', [App\Http\Controllers\UserController::class, 'delete'])->name('delete_user');
 
+Route::put('/toggle_user_status', [App\Http\Controllers\UserController::class, 'toggleActive'])->name('toggle_user_status');
+
 // job routes
+
+Route::get('/job_details_report', [App\Http\Controllers\JobController::class, 'generateJobDetailReport'])->name('job_details_report');
 
 Route::get('/job', [App\Http\Controllers\JobController::class, 'index'])->name('job');
 
@@ -50,6 +59,8 @@ Route::post('/store_job', [App\Http\Controllers\JobController::class, 'store'])-
 
 Route::get('/edit_job', [App\Http\Controllers\JobController::class, 'edit'])->name('edit_job');
 
+Route::post('/update_job', [App\Http\Controllers\JobController::class, 'update'])->name('update_job');
+
 Route::get('/job-list', [App\Http\Controllers\JobController::class, 'list_activity'])->name('job-list');
 
 Route::get('/search', [App\Http\Controllers\JobController::class, 'search'])->name('search');
@@ -60,11 +71,21 @@ Route::put('job/{id}/update-status', 'JobController@startJob')->name('job.update
 
 Route::put('job/{id}/complete-status', 'JobController@completeJob')->name('job.complete.status');
 
+Route::put('job/{jobDepId}/{jobId}/final-status', 'JobController@completeFinalJob')->name('job.final.status');
 
+Route::put('job/{jobDepId}/{jobId}/begin-status', 'JobController@beginJob')->name('job.begin.status');
 
-Route::get('/tv31', [App\Http\Controllers\TvController::class, 'index'])->name('tv31');
+Route::get('/job_department_records', [App\Http\Controllers\JobController::class, 'job_department_records'])->name('job_department_records');
 
-Route::get('/tv32', [App\Http\Controllers\TvController::class, 'tv32'])->name('tv32');
+Route::get('/job_department_token', [App\Http\Controllers\JobController::class, 'job_department_token'])->name('job_department_token');
+
+Route::get('/edit_token/{id}', [App\Http\Controllers\JobController::class, 'edit_token'])->name('edit_token');
+
+Route::post('/update_token', [App\Http\Controllers\JobController::class, 'update_token'])->name('update_token');
+
+Route::post('/check_invoice', [App\Http\Controllers\JobController::class, 'check_invoice'])->name('check_invoice');
+
+Route::post('/deactivate_job', [App\Http\Controllers\JobController::class, 'deactivate_job'])->name('deactivate_job');
 
 
 // auth routes
@@ -74,7 +95,7 @@ Route::get('/client', [App\Http\Controllers\ClientController::class, 'index'])->
 Route::post('/client', [App\Http\Controllers\ClientController::class, 'store'])->name('store');
 Route::get('/clientedit-{id}', [App\Http\Controllers\ClientController::class, 'clientedit'])->name('clientedit');
 Route::put('/clientedit-{id}', [App\Http\Controllers\ClientController::class, 'clientupdate'])->name('clientupdate');
-Route::delete('/client/delete', [App\Http\Controllers\ClientController::class, 'delete'])->name('delete_client');
+Route::put('/client-{id}', [App\Http\Controllers\ClientController::class, 'delete'])->name('delete_client');
 // Route::resource('/client',App\Http\Controllers\ClientController::class);
 
 //department
@@ -82,6 +103,15 @@ Route::get('/department', [App\Http\Controllers\DepartmentController::class, 'in
 Route::post('/department', [App\Http\Controllers\DepartmentController::class, 'departmentstore'])->name('departmentstore');
 
 // tv
-Route::get('/designing', [App\Http\Controllers\TvController::class, 'index'])->name('designing');
+Route::get('/designing', [App\Http\Controllers\TvController::class, 'designing'])->name('designing');
+Route::get('/designing_details', [App\Http\Controllers\TvController::class, 'designing_details'])->name('designing_details');
+Route::get('/cutting', [App\Http\Controllers\TvController::class, 'cutting'])->name('cutting');
+Route::get('/cutting_details', [App\Http\Controllers\TvController::class, 'cutting_details'])->name('cutting_details');
+Route::get('/printing', [App\Http\Controllers\TvController::class, 'printing'])->name('printing');
+Route::get('/printing_details', [App\Http\Controllers\TvController::class, 'printing_details'])->name('printing_details');
+Route::get('/sewing', [App\Http\Controllers\TvController::class, 'sewing'])->name('sewing');
+Route::get('/sewing_details', [App\Http\Controllers\TvController::class, 'sewing_details'])->name('sewing_details');
+Route::get('/pressing', [App\Http\Controllers\TvController::class, 'pressing'])->name('pressing');
+Route::get('/pressing_details', [App\Http\Controllers\TvController::class, 'pressing_details'])->name('pressing_details');
 
 Auth::routes();

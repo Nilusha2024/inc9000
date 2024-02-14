@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\JobInserted;
+use App\Events\JobUpdated;
+use App\Listeners\UpdateTVScreens;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+
+// Register your events here
+// use artisan event:generate the generate events for this one
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,6 +25,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
     ];
+
 
     /**
      * Register any events for your application.

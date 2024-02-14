@@ -211,8 +211,34 @@
                                                 </a>
                                             </div>
                                             <div class="col">
+
+                                                {{-- toggle active --}}
+                                                <form method="POST" action="{{ route('toggle_user_status') }}">
+
+                                                    @csrf
+                                                    @method('PUT')
+
+                                                    <input type="hidden" class="form-control" name="user_id"
+                                                        id="user_id" value="{{ $user->id }}">
+
+                                                    @if ($user->status == 1)
+                                                        <button type="submit"
+                                                            onclick="return confirm('Are you sure you want to deactivate this user ?')"
+                                                            class="btn btn-danger btn-sm btn-flat" style="width: 100%">
+                                                            Deactivate
+                                                        </button>
+                                                    @else
+                                                        <button type="submit"
+                                                            onclick="return confirm('Are you sure you want to activate this user ?')"
+                                                            class="btn btn-success btn-sm btn-flat" style="width: 100%">
+                                                            Activate
+                                                        </button>
+                                                    @endif
+
+                                                </form>
+
                                                 {{-- delete --}}
-                                                <form method="POST" action="{{ route('delete_user') }}">
+                                                {{-- <form method="POST" action="{{ route('delete_user') }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <input type="hidden" class="form-control" name="user_id"
@@ -222,7 +248,8 @@
                                                         class="btn btn-danger btn-sm btn-flat" style="width: 100%">
                                                         Delete
                                                     </button>
-                                                </form>
+                                                </form> --}}
+
                                             </div>
                                         </div>
                                     </td>

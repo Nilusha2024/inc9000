@@ -134,10 +134,10 @@
                           </div>
                           {{-- delete --}}
                           <div class="col">
-                            <form method="POST" action="{{ route('delete_client') }}">
+                            <form method="POST" action="{{ route('delete_client', $client->id) }}">
                               @csrf
-                              @method('DELETE')
-                              <input type="hidden" class="form-control" name="id" id="id" value="{{ $client->id }}">
+                              @method('PUT')
+                              <input type="hidden" class="form-control" name="status" id="" value="0">
                               <button type="submit"
                                 onclick="return confirm('Are you sure you want to delete this user ?')"
                                 class="btn btn-danger btn-sm btn-flat" style="width: 100%">

@@ -24,4 +24,9 @@ class JobActivity extends Model
     {
         return $this->belongsTo('App\Models\User', 'employee_id', 'id');
     }
+
+    public function job_department()
+    {
+        return $this->belongsTo('App\Models\JobDepartment', 'job_id', 'job_id');
+    }
 }

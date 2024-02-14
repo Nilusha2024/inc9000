@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -76,10 +77,60 @@ class UserController extends Controller
         $user->email = $request->input('update_email');
         $user->username = $request->input('update_username');
 
-        // save model details to database
+        // save model details to the database
         $user->save();
 
         return back()->with('success', 'Successfully updated user !');
+    }
+
+    // edit profile : for password changes
+    public function profile()
+    {
+        $departments = Department::get();
+        $roles = UserRole::get();
+        $user = Auth::user();
+
+        return view('user-profile')->with(['user' => $user, 'roles' => $roles, 'departments' => $departments]);
+    }
+
+    // update profile
+    public function update_profile(Request $request)
+    {
+        $currentUser = Auth::user();
+        $user = User::find($currentUser->id);
+
+        $request->validate([
+            'username' => 'required|max:100|unique:users,username,' . $user->id,
+            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+                if (!Hash::check($value, $user->password)) {
+                    return $fail(__('The current password is incorrect.'));
+                }
+            }],
+            'new_password' => 'required|confirmed|min:6',
+        ]);
+
+        // update model information
+        $user->username = $request->input('username');
+        $user->password = Hash::make($request->input('new_password'));
+
+        // save model details to the database
+        $user->save();
+
+        return back()->with('success', 'Successfully updated profile credentials !');
+    }
+
+    // toggle user active status
+    public function toggleActive(Request $request)
+    {
+        $user = User::find($request->input('user_id'));
+
+        // update model info
+        $user->status =  $user->status == 1 ? 0 : 1;
+
+        // save model details to the
+        $user->save();
+
+        return back()->with('success', 'Successfully toggled user active status !');
     }
 
     // delete user

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -18,7 +18,7 @@ class ClientController extends Controller
         //
         // return view('client_create');
         //
-        $clientdetals = Client::with([])->paginate(25);
+        $clientdetals = Client::where('status', 1)->paginate(25);
         return view('client_create')->with(['clientdetals' => $clientdetals]);
     }
 
@@ -47,11 +47,11 @@ class ClientController extends Controller
  
         $request->validate([            
             'first_name' => 'required|string|max:255', 
-            'last_name' => 'required|string|max:255',
-            'email' => 'email|unique:users,email',
-            'phone_1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'phone_2' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'address' => 'required'
+            'last_name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email',
+            'phone_1' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'phone_2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'address' => 'nullable'
         ]);
 
         $messages = [
@@ -101,11 +101,11 @@ class ClientController extends Controller
         $input = $request->all();
         $request->validate([
             'first_name' => 'required|string|max:255', 
-            'last_name' => 'required|string|max:255',
-            'email' => 'email|unique:users,email',
-            'phone_1' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'phone_2' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'address' => 'required'
+            'last_name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users,email',
+            'phone_1' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'phone_2' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'address' => 'nullable'
         ]);
         DB::table('client')
         ->where('id', $request->id)
@@ -129,9 +129,20 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function delete(Request $request, Client $client)
     {
-        Client::find($request->input('id'))->delete();
+        $client = Client::find($request->input('id'));
+        $input = $request->all();
+        $request->validate([
+            'status' => '',
+        ]);
+
+        DB::table('client')
+        ->where('id', $request->id)
+        ->update([          
+            'status' => $request-> active_status , 
+        ]);
+        
         return back()->with('success','Successfully deleted client !');
     }
 }
